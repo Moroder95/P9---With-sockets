@@ -3,12 +3,72 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <script src='https://cdn.socket.io/socket.io-3.0.1.min.js'></script>
+    <title>FLA Restaurant Controller</title>
 </head>
-<body style="width:100vw; height: 100vh;">
-    do stuff
+<body style="width:100vw; height:100vh; display:flex; flex-direction:column; justify-content:center; margin:0; background-color:rgb(29, 28, 28); color:rgb(221, 220, 220)">
+    <div style='display:flex; flex-direction:row; gap:150px; height:20%;'>
+        <div style='display:block; margin:auto; font-size:2rem; font-family:Mulish Thin; text-align:center;'>
+            <p>Swipe in the direction you want to navigate</p>
+            <p>Tap to select</p>
+        </div>
+    </div>
+
+    <div class="input-box" style="width:100%; height:80%; background-color:rgb(91, 90, 90); display:flex; justify-content:center; align-items:center; transition:80ms;">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 462.95 462.95" style='width:15vmin; height:15vmin;'>
+            <defs>
+                <style>.cls-1,.cls-2{fill:none;stroke:rgb(143, 142, 142);stroke-linecap:round;stroke-width:11px;}.cls-1{stroke-miterlimit:10;}.cls-2{stroke-linejoin:round;}</style>
+            </defs>
+            <g id="Layer_2" data-name="Layer 2">
+                <g id="Layer_1-2" data-name="Layer 1">
+                    <line class="cls-1" x1="231.48" y1="168.91" x2="231.48" y2="13.1"/>
+                    <polyline class="cls-2" points="166.12 70.81 231.52 5.5 296.83 70.81"/>
+                    <line class="cls-1" x1="231.48" y1="294.04" x2="231.48" y2="449.85"/>
+                    <polyline class="cls-2" points="296.83 392.14 231.43 457.45 166.12 392.14"/>
+                    <line class="cls-1" x1="294.04" y1="231.48" x2="449.85" y2="231.48"/>
+                    <polyline class="cls-2" points="392.14 166.12 457.45 231.52 392.14 296.83"/>
+                    <line class="cls-1" x1="168.91" y1="231.48" x2="13.1" y2="231.48"/>
+                    <polyline class="cls-2" points="70.81 296.83 5.5 231.43 70.81 166.12"/>
+                </g>
+            </g>
+        </svg>
+    </div>
+    
     <script>
+        const socket = io.connect('http://localhost:5000');
+        const inputBox = document.querySelector('.input-box');
+        let xStart, xEnd, yStart, yEnd, xChange, yChange;
         
+        inputBox.addEventListener('touchstart', e => {
+            xStart = e.touches[0].pageX;
+            yStart = e.touches[0].pageY;
+            inputBox.style.backgroundColor = 'rgb(79, 78, 78)';
+        })
+
+        inputBox.addEventListener('touchend', e => {           
+            xEnd = e.changedTouches[0].pageX;
+            yEnd = e.changedTouches[0].pageY;
+            inputBox.style.backgroundColor = 'rgb(91, 90, 90)';
+
+            xChange = xEnd - xStart;
+            yChange = yEnd - yStart;
+
+            if(Math.abs(xChange) > 40 || Math.abs(yChange) > 40) {
+                if(Math.abs(xChange) > Math.abs(yChange)) {
+                    socket.emit('navigation', xChange > 0 ? 'ArrowRight' : 'ArrowLeft');
+                } else {
+                    socket.emit('navigation', yChange > 0 ? 'ArrowDown' : 'ArrowUp');
+                }
+            } else {
+                socket.emit('navigation', 'Enter');
+            }
+        })
+
+        // MOVE TO TABLET APP - Triggers keyboard events on emits from server
+        socket.on('navigation', (input) => {
+            document.dispatchEvent(new KeyboardEvent('keydown', {'key': input}));
+        })
     </script>
+
 </body>
 </html>
