@@ -26,9 +26,14 @@ app.get('*', (req,res) =>{
 io.on('connection', (socket) => {
     console.log('a user connected');
 
-    socket.on('navigation', (input) => {
+    socket.on('mobile navigation', (input) => {
         console.log('user action: ' + input);
-        io.sockets.emit('navigation', input);
+        io.sockets.emit('tablet navigation', input);
+    });
+
+    socket.on('alphanumeric input', (input) => {
+        console.log('alphanumeric input: ' + input);
+        io.sockets.emit('mobile AK', input);
     })
 
     socket.on('disconnect', () => {

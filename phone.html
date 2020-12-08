@@ -7,6 +7,11 @@
     <title>FLA Restaurant Controller</title>
 </head>
 <body style="width:100vw; height:100vh; display:flex; flex-direction:column; justify-content:center; margin:0; background-color:rgb(29, 28, 28); color:rgb(221, 220, 220)">
+    <div id='overlay' style='display:none; width:100%; height:100%; position:fixed; z-index:1; top:0; left:0; background-color:rgba(0,0,0,0.4);'>
+        <textarea class="note-input" style='display:none;'>
+        </textarea>
+    </div>
+    
     <div style='display:flex; flex-direction:row; gap:150px; height:20%;'>
         <div style='display:block; margin:auto; font-size:2rem; font-family:Mulish Thin; text-align:center;'>
             <p>Swipe in the direction you want to navigate</p>
@@ -37,13 +42,15 @@
     <script>
         const socket = io.connect('http://localhost:5000');
         const inputBox = document.querySelector('.input-box');
+        const overlay = document.querySelector('#overlay');
+        const textArea = document.querySelector('.note-input');
         let xStart, xEnd, yStart, yEnd, xChange, yChange;
         
         inputBox.addEventListener('touchstart', e => {
             xStart = e.touches[0].pageX;
             yStart = e.touches[0].pageY;
             inputBox.style.backgroundColor = 'rgb(79, 78, 78)';
-        })
+        });
 
         inputBox.addEventListener('touchend', e => {           
             xEnd = e.changedTouches[0].pageX;
@@ -55,14 +62,19 @@
 
             if(Math.abs(xChange) > 40 || Math.abs(yChange) > 40) {
                 if(Math.abs(xChange) > Math.abs(yChange)) {
-                    socket.emit('navigation', xChange > 0 ? 'ArrowRight' : 'ArrowLeft');
+                    socket.emit('mobile navigation', xChange > 0 ? 'ArrowRight' : 'ArrowLeft');
                 } else {
-                    socket.emit('navigation', yChange > 0 ? 'ArrowDown' : 'ArrowUp');
+                    socket.emit('mobile navigation', yChange > 0 ? 'ArrowDown' : 'ArrowUp');
                 }
             } else {
-                socket.emit('navigation', 'Enter');
+                console.log('enter');
+                socket.emit('mobile navigation', 'Enter');
             }
-        })        
+        });
+        
+        socket.on('mobile AK', (input) => {
+            overlay.style('display:block;');
+        })
     </script>
 
 </body>
