@@ -62,12 +62,7 @@
             } else {
                 socket.emit('navigation', 'Enter');
             }
-        })
-
-        // MOVE TO TABLET APP - Triggers keyboard events on emits from server
-        socket.on('navigation', (input) => {
-            document.dispatchEvent(new KeyboardEvent('keydown', {'key': input}));
-        })
+        })        
     </script>
 
 </body>
