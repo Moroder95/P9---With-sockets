@@ -8,14 +8,16 @@ const io = require('socket.io')(http);
 // Serve the static files from the React app
 app.use(express.static(path.join(__dirname, 'client/build')));
 
+// Serve the phone UI
+app.get('/phone', (req, res)=>{
+    res.sendFile(path.join(__dirname, '/phone.html'));
+});
+
 // An api endpoint that returns a short list of items
 app.get('/api/getList', (req,res) => {
     var list = ["item1", "item2", "item3"];
     res.json(list);
     console.log('Sent list of items');
-});
-app.get('/phone', (req, res)=>{
-    res.sendFile(path.join(__dirname, '/phone.html'));
 });
 
 // Handles any requests that don't match the ones above
@@ -27,14 +29,16 @@ io.on('connection', (socket) => {
     console.log('a user connected');
 
     socket.on('mobile navigation', (input) => {
-        console.log('user action: ' + input);
-        io.sockets.emit('tablet navigation', input);
+        socket.broadcast.emit('tablet navigation', input);
     });
 
     socket.on('alphanumeric input', (input) => {
-        console.log('alphanumeric input: ' + input);
-        io.sockets.emit('mobile AK', input);
-    })
+        socket.broadcast.emit('mobile AK', input);
+    });
+
+    socket.on('note input', (input) => {
+        socket.broadcast.emit('note input', input);
+    });
 
     socket.on('disconnect', () => {
       console.log('user disconnected');
