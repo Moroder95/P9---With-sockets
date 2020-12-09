@@ -27,6 +27,12 @@ app.get('*', (req,res) =>{
 
 io.on('connection', (socket) => {
     console.log('a user connected');
+    let phoneRegex = /phone/;
+
+    if(phoneRegex.test(socket.handshake.headers.referer)) {
+        console.log('phone connected');
+        io.emit('phone connected', 'swipe');
+    }
 
     socket.on('mobile navigation', (input) => {
         socket.broadcast.emit('tablet navigation', input);
