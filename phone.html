@@ -80,21 +80,17 @@
             overlay.style.display = 'block';
             textArea.focus();
             textArea.value = input;
+        });
+
+        socket.on('prev note', (input) => {
+            textArea.value = input;
         })
 
         inputNote = () => {
             socket.emit('note input', textArea.value);
             textArea.blur();
             overlay.style.display = 'none';
-        }
-
-        // textArea.addEventListener('keydown', (e) => {
-        //     if(e.key === 'Enter') {
-        //         socket.emit('note input', textArea.value);
-        //         textArea.blur();
-        //         overlay.style.display = 'none';
-        //     }
-        // })
+        };
     </script>
 </body>
 </html>

@@ -51,6 +51,10 @@ io.on('connection', (socket) => {
         socket.broadcast.emit('note input', input);
     });
 
+    socket.on('prev note', (input) => {
+        socket.broadcast.emit('prev note', input);
+    })
+
     socket.on('disconnect', () => {
       console.log('user disconnected');
     });
