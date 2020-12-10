@@ -4,6 +4,7 @@ const path = require('path');
 const app = express();
 const http = require('http').createServer(app);
 const io = require('socket.io')(http);
+let phoneId = '';
 
 // Serve the static files from the React app
 app.use(express.static(path.join(__dirname, 'client/build')));
@@ -31,7 +32,11 @@ io.on('connection', (socket) => {
 
     if(phoneRegex.test(socket.handshake.headers.referer)) {
         console.log('phone connected');
-        io.emit('phone connected', 'swipe');
+
+        if(phoneId !== socket.id) {
+            io.emit('phone connected', 'swipe');
+            phoneId = socket.id;
+        }
     }
 
     socket.on('mobile navigation', (input) => {
