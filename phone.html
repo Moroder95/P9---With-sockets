@@ -43,7 +43,7 @@
     </div>
     
     <script>
-        const socket = io.connect('http://localhost:5000');
+        const socket = io();
         const inputBox = document.querySelector('.input-box');
         const overlay = document.querySelector('#overlay');
         const textArea = document.querySelector('.note-input');
