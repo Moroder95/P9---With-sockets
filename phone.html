@@ -11,6 +11,7 @@
     <div id='overlay' style='display:none; width:100%; height:100%; position:fixed; z-index:2; top:0; left:0; background-color:rgba(0,0,0,0.4);'>
         <textarea class="note-input" value='' style='box-sizing:border-box; width:100%; height:20vh; margin:40vh auto auto; padding:5%; font-size:4vmin; font-family:Mulish Regular; box-shadow:0 0 10px rgba(0,0,0,0.4); outline:none;'>
         </textarea>
+        <button onclick='inputNote()' style='display:block; margin:5% auto 0; padding: 15px 20px; background-color:#048644; color:white; border-radius:10px; border:none; font-size:4vmin;'>OK</button>
     </div>
     
     <!-- INFO TEXT -->
@@ -47,6 +48,7 @@
         const inputBox = document.querySelector('.input-box');
         const overlay = document.querySelector('#overlay');
         const textArea = document.querySelector('.note-input');
+        const okBtn = document.querySelector('#ok-btn');
         let xStart, xEnd, yStart, yEnd, xChange, yChange;
         
         inputBox.addEventListener('touchstart', e => {
@@ -79,14 +81,20 @@
             textArea.focus();
             textArea.value = input;
         })
-        
-        textArea.addEventListener('keydown', (e) => {
-            if(e.key === 'Enter') {
-                socket.emit('note input', textArea.value);
-                textArea.blur();
-                overlay.style.display = 'none';
-            }
-        })
+
+        inputNote = () => {
+            socket.emit('note input', textArea.value);
+            textArea.blur();
+            overlay.style.display = 'none';
+        }
+
+        // textArea.addEventListener('keydown', (e) => {
+        //     if(e.key === 'Enter') {
+        //         socket.emit('note input', textArea.value);
+        //         textArea.blur();
+        //         overlay.style.display = 'none';
+        //     }
+        // })
     </script>
 </body>
 </html>
