@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+        <script src='https://cdn.socket.io/socket.io-3.0.1.min.js'></script>
+        <title>FLA Restaurant Controller</title>
+        <link rel="stylesheet" type="text/css" href="phone.css" />
+    </head>
+    <body>
+        <!-- INTRO OVERLAY -->
+        <div id="intro-overlay">
+            <!-- PAGE ONE -->
+            <div id='welcome-text'>
+                <p>
+                    You're almost ready to control the FLA restaurant display from your phone!
+                    <span>Click the 'Next' button below to learn how</span>
+                </p>
+            </div>
+            <!-- PAGE TWO -->
+            <div id="swipe-content">
+                <p>Swipe up, down, left, or right in the grey area to navigate on the FLA restaurant display</p>
+                <div id='swipe-animation'>
+                    <svg id='swipe' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 595.18 667">
+                        <g id="Layer_2" data-name="Layer 2">
+                            <g id="Layer_1-2" data-name="Layer 1">
+                                <path d="M542.21,260.49c-53,0-53,31.39-53,31.39V274.49s0-31.39-53-31.39-53,31.39-53,31.39V257s0-31.39-53-31.39-53,31.39-53,31.39V60.81S277.37,0,224.4,0s-53,60.81-53,60.81V419.07l-35.31-34.57S65.5,315.84,24.3,347.23,6.76,403.62,6.76,403.62l96,104.48,64.74,70.62S226.36,667,383.3,667s186.37-54.93,196.18-76.51,15.69-68.66,15.69-104V291.88S595.18,260.49,542.21,260.49Z"/>
+                            </g>
+                        </g>
+                    </svg>
+                </div>
+            </div>
+            <!-- PAGE THREE -->
+            <div id='tap-content'>
+                <p>Tap on the grey area to select </p>
+                <div id='tap-animation'>
+                    <svg id='tap' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 595.18 667">
+                        <g id="Layer_2" data-name="Layer 2">
+                            <g id="Layer_1-2" data-name="Layer 1">
+                                <path d="M542.21,260.49c-53,0-53,31.39-53,31.39V274.49s0-31.39-53-31.39-53,31.39-53,31.39V257s0-31.39-53-31.39-53,31.39-53,31.39V60.81S277.37,0,224.4,0s-53,60.81-53,60.81V419.07l-35.31-34.57S65.5,315.84,24.3,347.23,6.76,403.62,6.76,403.62l96,104.48,64.74,70.62S226.36,667,383.3,667s186.37-54.93,196.18-76.51,15.69-68.66,15.69-104V291.88S595.18,260.49,542.21,260.49Z"/>
+                            </g>
+                        </g>
+                    </svg>
+                </div>
+            </div>
+            <div id='progress-div'>
+                <div id='dot-one'></div>
+                <div id='dot-two'></div>
+                <div id='dot-three'></div>
+            </div>
+            <div id='btn-div'>
+                <button id='prev-btn' onclick='browseInfo(subtract)'>Back</button>
+                <button id='next-btn' onclick='browseInfo(add)'>Next</button>
+            </div>
+        </div>
+        
+        <!-- TEXTAREA OVERLAY -->
+        <div id='textarea-overlay'>
+            <textarea class="note-input" value=''>
+            </textarea>
+            <button onclick='inputNote()'>OK</button>
+        </div>
+        
+        <!-- INFO TEXT -->
+        <div id="info-box">
+            <div id="info-text">
+                <p>Swipe in the direction you want to navigate</p>
+                <p>Tap to select</p>
+            </div>
+        </div>
+
+        <!-- INPUT BOX -->
+        <div class="input-box">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 462.95 462.95" style='width:25vmin; height:25vmin;'>
+                <defs>
+                    <style>.cls-1,.cls-2{fill:none;stroke:rgb(143, 142, 142);stroke-linecap:round;stroke-width:11px;}.cls-1{stroke-miterlimit:10;}.cls-2{stroke-linejoin:round;}</style>
+                </defs>
+                <g id="Layer_2" data-name="Layer 2">
+                    <g id="Layer_1-2" data-name="Layer 1">
+                        <!-- <line class="cls-1" x1="231.48" y1="168.91" x2="231.48" y2="13.1"/> -->
+                        <polyline class="cls-2" points="166.12 70.81 231.52 5.5 296.83 70.81"/>
+                        <!-- <line class="cls-1" x1="231.48" y1="294.04" x2="231.48" y2="449.85"/> -->
+                        <polyline class="cls-2" points="296.83 392.14 231.43 457.45 166.12 392.14"/>
+                        <!-- <line class="cls-1" x1="294.04" y1="231.48" x2="449.85" y2="231.48"/> -->
+                        <polyline class="cls-2" points="392.14 166.12 457.45 231.52 392.14 296.83"/>
+                        <!-- <line class="cls-1" x1="168.91" y1="231.48" x2="13.1" y2="231.48"/> -->
+                        <polyline class="cls-2" points="70.81 296.83 5.5 231.43 70.81 166.12"/>
+                    </g>
+                </g>
+            </svg>
+        </div>
+        
+        <script>
+            const socket = io();
+            const inputBox = document.querySelector('.input-box');
+            
+            const introOverlay = document.querySelector('#intro-overlay');
+            const welcomeText = document.querySelector('#welcome-text');
+            const swipeContent = document.querySelector('#swipe-content');
+            const tapContent = document.querySelector('#tap-content');
+            const dotOne = document.querySelector('#dot-one');
+            const dotTwo = document.querySelector('#dot-two');
+            const dotThree = document.querySelector('#dot-three');
+            const dotArr = [dotOne, dotTwo, dotThree];
+            const prevBtn = document.querySelector('#prev-btn');
+            const nextBtn = document.querySelector('#next-btn');
+
+            const swipeAnimation = document.querySelector('#swipe');
+            const tapAnimation = document.querySelector('#tap');
+            
+            const textAreaOverlay = document.querySelector('#textarea-overlay');
+            const textArea = document.querySelector('.note-input');
+            const okBtn = document.querySelector('#ok-btn');
+            let xStart, xEnd, yStart, yEnd, xChange, yChange, infoIndex = 0;
+            
+            inputBox.addEventListener('touchstart', e => {
+                xStart = e.touches[0].pageX;
+                yStart = e.touches[0].pageY;
+                inputBox.style.backgroundColor = 'rgb(79, 78, 78)';
+            });
+
+            inputBox.addEventListener('touchend', e => {           
+                xEnd = e.changedTouches[0].pageX;
+                yEnd = e.changedTouches[0].pageY;
+                inputBox.style.backgroundColor = 'rgb(83, 81, 90)';
+
+                xChange = xEnd - xStart;
+                yChange = yEnd - yStart;
+
+                if(Math.abs(xChange) > 40 || Math.abs(yChange) > 40) {
+                    if(Math.abs(xChange) > Math.abs(yChange)) {
+                        socket.emit('mobile navigation', xChange > 0 ? 'ArrowRight' : 'ArrowLeft');
+                    } else {
+                        socket.emit('mobile navigation', yChange > 0 ? 'ArrowDown' : 'ArrowUp');
+                    }
+                } else {
+                    socket.emit('mobile navigation', 'Enter');
+                }
+            });
+            
+            socket.on('mobile AK', (input) => {
+                textAreaOverlay.style.display = 'block';
+                textArea.focus();
+                textArea.value = input;
+            });
+
+            socket.on('prev note', (input) => {
+                textArea.value = input;
+            });
+
+            browseInfo = (calc) => {
+                let i = infoIndex;
+                infoIndex = calc(i, 1);
+                switch(infoIndex) {
+                    case 0:
+                        transition(swipeContent, 0, 'right');
+                        transition(welcomeText, 1, 'right');
+                        swipeAnimation.style.animationName = '';
+                        transitionProg(dotArr[infoIndex], dotArr[i]);
+                        prevBtn.style.display = 'none';
+                        break;
+                    case 1:
+                        if(i < infoIndex) {
+                            transition(welcomeText, 0, 'left');
+                            transition(swipeContent, 1, 'left');
+                        } else {
+                            transition(tapContent, 0, 'right');
+                            transition(swipeContent, 1, 'right');
+                            tapAnimation.style.animationName = '';
+                            nextBtn.textContent = 'Next';
+                        }
+                        transitionProg(dotArr[infoIndex], dotArr[i]);
+                        swipeAnimation.style.animationName = 'swipeAnimation';
+                        prevBtn.style.display = 'block';
+                        break;
+                    case 2:
+                        transition(swipeContent, 0, 'left');
+                        transition(tapContent, 1, 'left');
+                        swipeAnimation.style.animationName = '';
+                        tapAnimation.style.animationName = 'tapAnimation';
+                        transitionProg(dotArr[infoIndex], dotArr[i]);
+                        nextBtn.textContent = 'Got it';
+                        break;
+                    case 3:
+                        introOverlay.style.display = 'none';
+                        break;
+                }
+            }
+
+            transition = (el, opacity, dir, fadeIn) => {
+                let displace = '15vw';
+                el.style.opacity = opacity;
+                if(opacity === 1) {
+                    el.style.left = '5vw';
+                } else {
+                    displaceDir = dir === 'left' 
+                        ? '-' + displace 
+                        : '20vw';
+                    el.style.left = displaceDir;
+                }
+            }
+
+            transitionProg = (newI, prevI) => {
+                const smallSize = 5;
+                const largeSize = 10;
+
+                prevI.style.width = smallSize + 'px';
+                prevI.style.height = smallSize + 'px';
+                prevI.style.borderRadius = smallSize / 2 + 'px';
+                prevI.style.backgroundColor = 'rgb(100,100,100)';
+
+                newI.style.width = largeSize + 'px';
+                newI.style.height = largeSize + 'px';
+                newI.style.borderRadius = largeSize / 2 + 'px';
+                newI.style.backgroundColor = '#ccc';
+
+            }
+
+            subtract = (a, b) => { return a - b }
+
+            add = (a, b) => { return a + b }
+
+            inputNote = () => {
+                socket.emit('note input', textArea.value);
+                textArea.blur();
+                textAreaOverlay.style.display = 'none';
+            };
+        </script>
+    </body>
+</html>

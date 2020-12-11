@@ -1,0 +1,214 @@
+body {
+    width:100vw; 
+    height:100vh; 
+    overflow:hidden;
+    display:flex; 
+    flex-direction:column; 
+    justify-content:center; 
+    margin:0; 
+    // background-color:rgb(29, 29, 34); 
+    background: linear-gradient(325deg, rgba(45,46,51,1) 40%, rgba(71,72,80,1) 100%);
+    color:rgb(221, 220, 220);
+    font-family:'Mulish Thin'; 
+    
+    button {
+        display:block; 
+        margin:5% auto 0; 
+        padding: 20px 30px; 
+        background-color:#048644; 
+        color:white; 
+        border-radius:10px; 
+        border:none; 
+        font-size:1rem;
+        outline: none;
+    }
+    
+    #intro-overlay, #textarea-overlay {
+        display:none; 
+        width:100%; 
+        height:100%; 
+        position:fixed; 
+        z-index:2; 
+        top:0; 
+        left:0; 
+        background: linear-gradient(325deg, rgba(45,46,51,1) 40%, rgba(71,72,80,1) 100%);
+        font-weight: 600;
+
+        button {
+            padding: 0;
+            width: 120px;
+            height: 50px;
+        }
+        
+        .note-input {
+            box-sizing:border-box; 
+            width:100%; 
+            height:20vh; 
+            margin:40vh auto auto; 
+            padding:5%; 
+            font-size:4vmin; 
+            font-family:'Mulish Regular'; 
+            box-shadow:0 0 20px rgba(0,0,0,0.2); 
+            outline:none;
+        }
+
+        #welcome-text, #swipe-content, #tap-content {
+            width: 80vw;
+            height: fit-content;
+            border-radius: 20px;
+            padding: 5vmin;
+            margin: 30vh auto 0;
+            text-align: center;
+            font-size: 1.2rem;
+            position: absolute;
+            top: 0;
+            left: 20vw;
+            opacity: 0;
+
+            transition: left .9s ease, opacity .4s ease-in;
+
+            span {
+                display: block;
+                margin-top: 8vh;
+                font-size: .9rem;
+            }
+
+            #swipe-animation, #tap-animation {
+                width: 40vmin;
+                height: 40vmin;
+                background-color: rgb(125, 127, 128);
+                display: block;
+                margin: 10vh auto 0;
+
+                svg {
+                    fill: #ccc;
+                    width: 150px;
+                    position: absolute;
+                    top: 70%;
+                    left: 30%;
+                }
+
+                svg#swipe {
+                    animation-duration: 3s;
+                    animation-iteration-count: infinite;
+                    animation-direction: forward;
+                    transform-origin: center;
+                }
+
+                svg#tap {
+                    animation-duration: 2s;
+                    animation-iteration-count: infinite;
+                    animation-direction: forward;
+                    transform-origin: center;
+                }
+            }
+
+            #tap-animation {
+                margin-top: 16.6vh;
+            }
+        }
+
+        #swipe-content, #tap-content {
+            margin-top: 10vh;
+        }
+
+        #progress-div {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: row;
+            width: 100vw;
+            height: 10px;
+            position: fixed;
+            gap: 20px;
+            bottom: 15vh;
+
+            :not(:first-child) {
+                width: 5px;
+                height: 5px;
+                border-radius: 2.5px;
+                background-color: rgb(100, 100, 100);
+                transition: all .4s;
+                transform-origin: center;
+            }
+
+            #dot-one {
+                width: 10px;
+                height: 10px;
+                border-radius: 5px;
+                background-color: #ccc;
+                transition: all .4s;
+                transform-origin: center;
+            }
+        }
+
+        #btn-div {
+            display: flex;
+            flex-direction: row;
+            width: 100vw;
+            position: fixed;
+            left: 0;
+            bottom: 5vh;
+
+            #prev-btn {
+                display: none;
+                margin: 0 auto 0 5vh;
+            }
+
+            #next-btn {
+                margin: 0 5vh 0 auto;
+            }
+        }
+    }
+
+    #intro-overlay {
+        display: block;
+
+        #welcome-text {
+            opacity: 1;
+            left: 5vw;
+        }
+    }
+    
+    #info-box {
+        display:flex; 
+        flex-direction:row; 
+        gap:150px; 
+        height:20%;
+        
+        #info-text {
+            display:block; 
+            margin:auto; 
+            font-size:4vmin; 
+            text-align:center;
+        }
+    }
+    
+    .input-box {
+        width:100%; 
+        height:80%; 
+        background-color:#514f58; 
+        display:flex; 
+        justify-content:center; 
+        align-items:center; 
+        transition:80ms;
+    }
+}
+
+@keyframes swipeAnimation {
+    0% { left: 30%; }
+    10% { left: 25%; }
+    12% { transform: scale(.9); }
+    23% { left: 48%; transform: scale(.9); }
+    32% { transform: scale(1); }
+    40% { left: 50%; }
+    100% { left: 30%; }
+}
+
+@keyframes tapAnimation {
+    0% { transform: scale(1); }
+    10% { transform: scale(1); }
+    20% { transform: scale(.9); }
+    50% { transform: scale(1); }
+    0% { transform: scale(1); }
+}

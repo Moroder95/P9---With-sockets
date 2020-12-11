@@ -1,0 +1,346 @@
+body {
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  margin: 0;
+  background: linear-gradient(325deg, #2d2e33 40%, #474850 100%);
+  color: #dddcdc;
+  font-family: 'Mulish Thin';
+}
+
+body button {
+  display: block;
+  margin: 5% auto 0;
+  padding: 20px 30px;
+  background-color: #048644;
+  color: white;
+  border-radius: 10px;
+  border: none;
+  font-size: 1rem;
+  outline: none;
+}
+
+body #intro-overlay, body #textarea-overlay {
+  display: none;
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  z-index: 2;
+  top: 0;
+  left: 0;
+  background: linear-gradient(325deg, #2d2e33 40%, #474850 100%);
+  font-weight: 600;
+}
+
+body #intro-overlay button, body #textarea-overlay button {
+  padding: 0;
+  width: 120px;
+  height: 50px;
+}
+
+body #intro-overlay .note-input, body #textarea-overlay .note-input {
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  width: 100%;
+  height: 20vh;
+  margin: 40vh auto auto;
+  padding: 5%;
+  font-size: 4vmin;
+  font-family: 'Mulish Regular';
+  -webkit-box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+          box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+  outline: none;
+}
+
+body #intro-overlay #welcome-text, body #intro-overlay #swipe-content, body #intro-overlay #tap-content, body #textarea-overlay #welcome-text, body #textarea-overlay #swipe-content, body #textarea-overlay #tap-content {
+  width: 80vw;
+  height: -webkit-fit-content;
+  height: -moz-fit-content;
+  height: fit-content;
+  border-radius: 20px;
+  padding: 5vmin;
+  margin: 30vh auto 0;
+  text-align: center;
+  font-size: 1.2rem;
+  position: absolute;
+  top: 0;
+  left: 20vw;
+  opacity: 0;
+  -webkit-transition: left .9s ease, opacity .4s ease-in;
+  transition: left .9s ease, opacity .4s ease-in;
+}
+
+body #intro-overlay #welcome-text span, body #intro-overlay #swipe-content span, body #intro-overlay #tap-content span, body #textarea-overlay #welcome-text span, body #textarea-overlay #swipe-content span, body #textarea-overlay #tap-content span {
+  display: block;
+  margin-top: 8vh;
+  font-size: .9rem;
+}
+
+body #intro-overlay #welcome-text #swipe-animation, body #intro-overlay #welcome-text #tap-animation, body #intro-overlay #swipe-content #swipe-animation, body #intro-overlay #swipe-content #tap-animation, body #intro-overlay #tap-content #swipe-animation, body #intro-overlay #tap-content #tap-animation, body #textarea-overlay #welcome-text #swipe-animation, body #textarea-overlay #welcome-text #tap-animation, body #textarea-overlay #swipe-content #swipe-animation, body #textarea-overlay #swipe-content #tap-animation, body #textarea-overlay #tap-content #swipe-animation, body #textarea-overlay #tap-content #tap-animation {
+  width: 40vmin;
+  height: 40vmin;
+  background-color: #7d7f80;
+  display: block;
+  margin: 10vh auto 0;
+}
+
+body #intro-overlay #welcome-text #swipe-animation svg, body #intro-overlay #welcome-text #tap-animation svg, body #intro-overlay #swipe-content #swipe-animation svg, body #intro-overlay #swipe-content #tap-animation svg, body #intro-overlay #tap-content #swipe-animation svg, body #intro-overlay #tap-content #tap-animation svg, body #textarea-overlay #welcome-text #swipe-animation svg, body #textarea-overlay #welcome-text #tap-animation svg, body #textarea-overlay #swipe-content #swipe-animation svg, body #textarea-overlay #swipe-content #tap-animation svg, body #textarea-overlay #tap-content #swipe-animation svg, body #textarea-overlay #tap-content #tap-animation svg {
+  fill: #ccc;
+  width: 150px;
+  position: absolute;
+  top: 70%;
+  left: 30%;
+}
+
+body #intro-overlay #welcome-text #swipe-animation svg#swipe, body #intro-overlay #welcome-text #tap-animation svg#swipe, body #intro-overlay #swipe-content #swipe-animation svg#swipe, body #intro-overlay #swipe-content #tap-animation svg#swipe, body #intro-overlay #tap-content #swipe-animation svg#swipe, body #intro-overlay #tap-content #tap-animation svg#swipe, body #textarea-overlay #welcome-text #swipe-animation svg#swipe, body #textarea-overlay #welcome-text #tap-animation svg#swipe, body #textarea-overlay #swipe-content #swipe-animation svg#swipe, body #textarea-overlay #swipe-content #tap-animation svg#swipe, body #textarea-overlay #tap-content #swipe-animation svg#swipe, body #textarea-overlay #tap-content #tap-animation svg#swipe {
+  -webkit-animation-duration: 3s;
+          animation-duration: 3s;
+  -webkit-animation-iteration-count: infinite;
+          animation-iteration-count: infinite;
+  -webkit-animation-direction: forward;
+          animation-direction: forward;
+  -webkit-transform-origin: center;
+          transform-origin: center;
+}
+
+body #intro-overlay #welcome-text #swipe-animation svg#tap, body #intro-overlay #welcome-text #tap-animation svg#tap, body #intro-overlay #swipe-content #swipe-animation svg#tap, body #intro-overlay #swipe-content #tap-animation svg#tap, body #intro-overlay #tap-content #swipe-animation svg#tap, body #intro-overlay #tap-content #tap-animation svg#tap, body #textarea-overlay #welcome-text #swipe-animation svg#tap, body #textarea-overlay #welcome-text #tap-animation svg#tap, body #textarea-overlay #swipe-content #swipe-animation svg#tap, body #textarea-overlay #swipe-content #tap-animation svg#tap, body #textarea-overlay #tap-content #swipe-animation svg#tap, body #textarea-overlay #tap-content #tap-animation svg#tap {
+  -webkit-animation-duration: 2s;
+          animation-duration: 2s;
+  -webkit-animation-iteration-count: infinite;
+          animation-iteration-count: infinite;
+  -webkit-animation-direction: forward;
+          animation-direction: forward;
+  -webkit-transform-origin: center;
+          transform-origin: center;
+}
+
+body #intro-overlay #welcome-text #tap-animation, body #intro-overlay #swipe-content #tap-animation, body #intro-overlay #tap-content #tap-animation, body #textarea-overlay #welcome-text #tap-animation, body #textarea-overlay #swipe-content #tap-animation, body #textarea-overlay #tap-content #tap-animation {
+  margin-top: 16.6vh;
+}
+
+body #intro-overlay #swipe-content, body #intro-overlay #tap-content, body #textarea-overlay #swipe-content, body #textarea-overlay #tap-content {
+  margin-top: 10vh;
+}
+
+body #intro-overlay #progress-div, body #textarea-overlay #progress-div {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  width: 100vw;
+  height: 10px;
+  position: fixed;
+  gap: 20px;
+  bottom: 15vh;
+}
+
+body #intro-overlay #progress-div :not(:first-child), body #textarea-overlay #progress-div :not(:first-child) {
+  width: 5px;
+  height: 5px;
+  border-radius: 2.5px;
+  background-color: #646464;
+  -webkit-transition: all .4s;
+  transition: all .4s;
+  -webkit-transform-origin: center;
+          transform-origin: center;
+}
+
+body #intro-overlay #progress-div #dot-one, body #textarea-overlay #progress-div #dot-one {
+  width: 10px;
+  height: 10px;
+  border-radius: 5px;
+  background-color: #ccc;
+  -webkit-transition: all .4s;
+  transition: all .4s;
+  -webkit-transform-origin: center;
+          transform-origin: center;
+}
+
+body #intro-overlay #btn-div, body #textarea-overlay #btn-div {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  width: 100vw;
+  position: fixed;
+  left: 0;
+  bottom: 5vh;
+}
+
+body #intro-overlay #btn-div #prev-btn, body #textarea-overlay #btn-div #prev-btn {
+  display: none;
+  margin: 0 auto 0 5vh;
+}
+
+body #intro-overlay #btn-div #next-btn, body #textarea-overlay #btn-div #next-btn {
+  margin: 0 5vh 0 auto;
+}
+
+body #intro-overlay {
+  display: block;
+}
+
+body #intro-overlay #welcome-text {
+  opacity: 1;
+  left: 5vw;
+}
+
+body #info-box {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  gap: 150px;
+  height: 20%;
+}
+
+body #info-box #info-text {
+  display: block;
+  margin: auto;
+  font-size: 4vmin;
+  text-align: center;
+}
+
+body .input-box {
+  width: 100%;
+  height: 80%;
+  background-color: #514f58;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-transition: 80ms;
+  transition: 80ms;
+}
+
+@-webkit-keyframes swipeAnimation {
+  0% {
+    left: 30%;
+  }
+  10% {
+    left: 25%;
+  }
+  12% {
+    -webkit-transform: scale(0.9);
+            transform: scale(0.9);
+  }
+  23% {
+    left: 48%;
+    -webkit-transform: scale(0.9);
+            transform: scale(0.9);
+  }
+  32% {
+    -webkit-transform: scale(1);
+            transform: scale(1);
+  }
+  40% {
+    left: 50%;
+  }
+  100% {
+    left: 30%;
+  }
+}
+
+@keyframes swipeAnimation {
+  0% {
+    left: 30%;
+  }
+  10% {
+    left: 25%;
+  }
+  12% {
+    -webkit-transform: scale(0.9);
+            transform: scale(0.9);
+  }
+  23% {
+    left: 48%;
+    -webkit-transform: scale(0.9);
+            transform: scale(0.9);
+  }
+  32% {
+    -webkit-transform: scale(1);
+            transform: scale(1);
+  }
+  40% {
+    left: 50%;
+  }
+  100% {
+    left: 30%;
+  }
+}
+
+@-webkit-keyframes tapAnimation {
+  0% {
+    -webkit-transform: scale(1);
+            transform: scale(1);
+  }
+  10% {
+    -webkit-transform: scale(1);
+            transform: scale(1);
+  }
+  20% {
+    -webkit-transform: scale(0.9);
+            transform: scale(0.9);
+  }
+  50% {
+    -webkit-transform: scale(1);
+            transform: scale(1);
+  }
+  0% {
+    -webkit-transform: scale(1);
+            transform: scale(1);
+  }
+}
+
+@keyframes tapAnimation {
+  0% {
+    -webkit-transform: scale(1);
+            transform: scale(1);
+  }
+  10% {
+    -webkit-transform: scale(1);
+            transform: scale(1);
+  }
+  20% {
+    -webkit-transform: scale(0.9);
+            transform: scale(0.9);
+  }
+  50% {
+    -webkit-transform: scale(1);
+            transform: scale(1);
+  }
+  0% {
+    -webkit-transform: scale(1);
+            transform: scale(1);
+  }
+}
