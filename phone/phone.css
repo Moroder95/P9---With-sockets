@@ -83,7 +83,7 @@ body #intro-overlay #welcome-text, body #intro-overlay #swipe-content, body #int
 body #intro-overlay #welcome-text span, body #intro-overlay #swipe-content span, body #intro-overlay #tap-content span, body #textarea-overlay #welcome-text span, body #textarea-overlay #swipe-content span, body #textarea-overlay #tap-content span {
   display: block;
   margin-top: 8vh;
-  font-size: .9rem;
+  font-size: 1rem;
 }
 
 body #intro-overlay #welcome-text #swipe-animation, body #intro-overlay #welcome-text #tap-animation, body #intro-overlay #swipe-content #swipe-animation, body #intro-overlay #swipe-content #tap-animation, body #intro-overlay #tap-content #swipe-animation, body #intro-overlay #tap-content #tap-animation, body #textarea-overlay #welcome-text #swipe-animation, body #textarea-overlay #welcome-text #tap-animation, body #textarea-overlay #swipe-content #swipe-animation, body #textarea-overlay #swipe-content #tap-animation, body #textarea-overlay #tap-content #swipe-animation, body #textarea-overlay #tap-content #tap-animation {
@@ -109,6 +109,8 @@ body #intro-overlay #welcome-text #swipe-animation svg#swipe, body #intro-overla
           animation-iteration-count: infinite;
   -webkit-animation-direction: forward;
           animation-direction: forward;
+  -webkit-animation-delay: .6s;
+          animation-delay: .6s;
   -webkit-transform-origin: center;
           transform-origin: center;
 }
@@ -120,6 +122,8 @@ body #intro-overlay #welcome-text #swipe-animation svg#tap, body #intro-overlay 
           animation-iteration-count: infinite;
   -webkit-animation-direction: forward;
           animation-direction: forward;
+  -webkit-animation-delay: .6s;
+          animation-delay: .6s;
   -webkit-transform-origin: center;
           transform-origin: center;
 }
@@ -222,7 +226,7 @@ body #info-box {
 body #info-box #info-text {
   display: block;
   margin: auto;
-  font-size: 4vmin;
+  font-size: 4.5vmin;
   text-align: center;
 }
 
@@ -249,25 +253,26 @@ body .input-box {
   }
   10% {
     left: 25%;
+    -webkit-transform: scale(0.9) rotate(-15deg);
+            transform: scale(0.9) rotate(-15deg);
   }
   12% {
-    -webkit-transform: scale(0.9);
-            transform: scale(0.9);
+    -webkit-transform: scale(0.9) rotate(-15deg);
+            transform: scale(0.9) rotate(-15deg);
   }
   23% {
-    left: 48%;
-    -webkit-transform: scale(0.9);
-            transform: scale(0.9);
+    -webkit-transform: scale(0.9) rotate(8deg);
+            transform: scale(0.9) rotate(8deg);
   }
   32% {
-    -webkit-transform: scale(1);
-            transform: scale(1);
-  }
-  40% {
     left: 50%;
+    -webkit-transform: scale(1) rotate(10deg);
+            transform: scale(1) rotate(10deg);
   }
   100% {
     left: 30%;
+    -webkit-transform: rotate(0deg);
+            transform: rotate(0deg);
   }
 }
 
@@ -277,25 +282,26 @@ body .input-box {
   }
   10% {
     left: 25%;
+    -webkit-transform: scale(0.9) rotate(-15deg);
+            transform: scale(0.9) rotate(-15deg);
   }
   12% {
-    -webkit-transform: scale(0.9);
-            transform: scale(0.9);
+    -webkit-transform: scale(0.9) rotate(-15deg);
+            transform: scale(0.9) rotate(-15deg);
   }
   23% {
-    left: 48%;
-    -webkit-transform: scale(0.9);
-            transform: scale(0.9);
+    -webkit-transform: scale(0.9) rotate(8deg);
+            transform: scale(0.9) rotate(8deg);
   }
   32% {
-    -webkit-transform: scale(1);
-            transform: scale(1);
-  }
-  40% {
     left: 50%;
+    -webkit-transform: scale(1) rotate(10deg);
+            transform: scale(1) rotate(10deg);
   }
   100% {
     left: 30%;
+    -webkit-transform: rotate(0deg);
+            transform: rotate(0deg);
   }
 }
 

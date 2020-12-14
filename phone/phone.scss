@@ -70,7 +70,7 @@ body {
             span {
                 display: block;
                 margin-top: 8vh;
-                font-size: .9rem;
+                font-size: 1rem;
             }
 
             #swipe-animation, #tap-animation {
@@ -92,6 +92,7 @@ body {
                     animation-duration: 3s;
                     animation-iteration-count: infinite;
                     animation-direction: forward;
+                    animation-delay: .6s;
                     transform-origin: center;
                 }
 
@@ -99,6 +100,7 @@ body {
                     animation-duration: 2s;
                     animation-iteration-count: infinite;
                     animation-direction: forward;
+                    animation-delay: .6s;
                     transform-origin: center;
                 }
             }
@@ -179,7 +181,7 @@ body {
         #info-text {
             display:block; 
             margin:auto; 
-            font-size:4vmin; 
+            font-size:4.5vmin; 
             text-align:center;
         }
     }
@@ -197,12 +199,11 @@ body {
 
 @keyframes swipeAnimation {
     0% { left: 30%; }
-    10% { left: 25%; }
-    12% { transform: scale(.9); }
-    23% { left: 48%; transform: scale(.9); }
-    32% { transform: scale(1); }
-    40% { left: 50%; }
-    100% { left: 30%; }
+    10% { left: 25%; transform: scale(.9) rotate(-15deg); }
+    12% { transform: scale(.9) rotate(-15deg); }
+    23% { transform: scale(.9) rotate(8deg); }
+    32% { left: 50%; transform: scale(1) rotate(10deg); }
+    100% { left: 30%; transform: rotate(0deg) }
 }
 
 @keyframes tapAnimation {
