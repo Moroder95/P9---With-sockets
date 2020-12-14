@@ -228,6 +228,9 @@ body #info-box #info-text {
   margin: auto;
   font-size: 4.5vmin;
   text-align: center;
+  color: transparent;
+  -webkit-transition: 400ms;
+  transition: 400ms;
 }
 
 body .input-box {
@@ -245,6 +248,13 @@ body .input-box {
           align-items: center;
   -webkit-transition: 80ms;
   transition: 80ms;
+}
+
+body .input-box #arrows {
+  -webkit-transform: scale(0.9);
+          transform: scale(0.9);
+  -webkit-transition: 400ms;
+  transition: 400ms;
 }
 
 @-webkit-keyframes swipeAnimation {

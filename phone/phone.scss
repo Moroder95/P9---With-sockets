@@ -183,6 +183,8 @@ body {
             margin:auto; 
             font-size:4.5vmin; 
             text-align:center;
+            color: transparent;
+            transition: 400ms;
         }
     }
     
@@ -194,6 +196,11 @@ body {
         justify-content:center; 
         align-items:center; 
         transition:80ms;
+
+        #arrows {
+            transform: scale(.9);
+            transition: 400ms;
+        }
     }
 }
 

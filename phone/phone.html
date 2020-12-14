@@ -71,7 +71,7 @@
 
         <!-- INPUT BOX -->
         <div class="input-box">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 462.95 462.95" style='width:25vmin; height:25vmin;'>
+            <svg id='arrows' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 462.95 462.95" style='width:25vmin; height:25vmin;'>
                 <defs>
                     <style>.cls-1,.cls-2{fill:none;stroke:rgb(143, 142, 142);stroke-linecap:round;stroke-width:11px;}.cls-1{stroke-miterlimit:10;}.cls-2{stroke-linejoin:round;}</style>
                 </defs>
@@ -104,7 +104,7 @@
             const dotArr = [dotOne, dotTwo, dotThree];
             const prevBtn = document.querySelector('#prev-btn');
             const nextBtn = document.querySelector('#next-btn');
-
+            
             const swipeAnimation = document.querySelector('#swipe');
             const tapAnimation = document.querySelector('#tap');
             
@@ -113,20 +113,21 @@
             const okBtn = document.querySelector('#ok-btn');
             let xStart, xEnd, yStart, yEnd, xChange, yChange, infoIndex = 0;
             
+            
             inputBox.addEventListener('touchstart', e => {
                 xStart = e.touches[0].pageX;
                 yStart = e.touches[0].pageY;
                 inputBox.style.backgroundColor = 'rgb(79, 78, 78)';
             });
-
+            
             inputBox.addEventListener('touchend', e => {           
                 xEnd = e.changedTouches[0].pageX;
                 yEnd = e.changedTouches[0].pageY;
                 inputBox.style.backgroundColor = '#514f58';
-
+                
                 xChange = xEnd - xStart;
                 yChange = yEnd - yStart;
-
+                
                 if(Math.abs(xChange) > 40 || Math.abs(yChange) > 40) {
                     if(Math.abs(xChange) > Math.abs(yChange)) {
                         socket.emit('mobile navigation', xChange > 0 ? 'ArrowRight' : 'ArrowLeft');
@@ -143,11 +144,11 @@
                 textArea.focus();
                 textArea.value = input;
             });
-
+            
             socket.on('prev note', (input) => {
                 textArea.value = input;
             });
-
+            
             browseInfo = (calc) => {
                 let i = infoIndex;
                 let timeout = 200;
@@ -156,15 +157,15 @@
                     case 0:
                         transition(swipeContent, 0, 'right');
                         setTimeout(() => transition(welcomeText, 1, 'right'), timeout);
-
+                        
                         // transition(welcomeText, 1, 'right');
                         swipeAnimation.style.animationName = '';
                         transitionProg(dotArr[infoIndex], dotArr[i]);
                         prevBtn.style.display = 'none';
                         break;
-                    case 1:
-                        if(i < infoIndex) {
-                            transition(welcomeText, 0, 'left');
+                        case 1:
+                            if(i < infoIndex) {
+                                transition(welcomeText, 0, 'left');
                             setTimeout(() => transition(swipeContent, 1, 'left'), timeout);
                         } else {
                             transition(tapContent, 0, 'right');
@@ -176,58 +177,60 @@
                         swipeAnimation.style.animationName = 'swipeAnimation';
                         prevBtn.style.display = 'block';
                         break;
-                    case 2:
-                        transition(swipeContent, 0, 'left');
-                        setTimeout(() => transition(tapContent, 1, 'left'), timeout);
-                        swipeAnimation.style.animationName = '';
-                        tapAnimation.style.animationName = 'tapAnimation';
-                        transitionProg(dotArr[infoIndex], dotArr[i]);
-                        nextBtn.textContent = 'Got it';
-                        break;
-                    case 3:
-                        introOverlay.style.display = 'none';
-                        break;
-                }
-            }
-
-            transition = (el, opacity, dir, fadeIn) => {
-                let displace = '15vw';
-                el.style.opacity = opacity;
-                if(opacity === 1) {
-                    el.style.left = '5vw';
-                } else {
-                    displaceDir = dir === 'left' 
-                        ? '-' + displace 
-                        : '20vw';
-                    el.style.left = displaceDir;
-                }
-            }
-
-            transitionProg = (newI, prevI) => {
-                const smallSize = 5;
-                const largeSize = 10;
-
-                prevI.style.width = smallSize + 'px';
-                prevI.style.height = smallSize + 'px';
-                prevI.style.borderRadius = smallSize / 2 + 'px';
-                prevI.style.backgroundColor = 'rgb(100,100,100)';
-
-                newI.style.width = largeSize + 'px';
-                newI.style.height = largeSize + 'px';
-                newI.style.borderRadius = largeSize / 2 + 'px';
-                newI.style.backgroundColor = '#ccc';
-
-            }
-
-            subtract = (a, b) => { return a - b }
-
-            add = (a, b) => { return a + b }
-
-            inputNote = () => {
-                socket.emit('note input', textArea.value);
-                textArea.blur();
-                textAreaOverlay.style.display = 'none';
-            };
-        </script>
+                        case 2:
+                            transition(swipeContent, 0, 'left');
+                            setTimeout(() => transition(tapContent, 1, 'left'), timeout);
+                            swipeAnimation.style.animationName = '';
+                            tapAnimation.style.animationName = 'tapAnimation';
+                            transitionProg(dotArr[infoIndex], dotArr[i]);
+                            nextBtn.textContent = 'Got it';
+                            break;
+                            case 3:
+                                introOverlay.style.display = 'none';
+                                const arrows = document.querySelector('#arrows').style.transform = 'scale(1)';
+                                const infoText = document.querySelector('#info-text').style.color = 'rgb(221, 220, 220)';
+                                break;
+                            }
+                        }
+                        
+                        transition = (el, opacity, dir, fadeIn) => {
+                            let displace = '15vw';
+                            el.style.opacity = opacity;
+                            if(opacity === 1) {
+                                el.style.left = '5vw';
+                            } else {
+                                displaceDir = dir === 'left' 
+                                ? '-' + displace 
+                                : '20vw';
+                                el.style.left = displaceDir;
+                            }
+                        }
+                        
+                        transitionProg = (newI, prevI) => {
+                            const smallSize = 5;
+                            const largeSize = 10;
+                            
+                            prevI.style.width = smallSize + 'px';
+                            prevI.style.height = smallSize + 'px';
+                            prevI.style.borderRadius = smallSize / 2 + 'px';
+                            prevI.style.backgroundColor = 'rgb(100,100,100)';
+                            
+                            newI.style.width = largeSize + 'px';
+                            newI.style.height = largeSize + 'px';
+                            newI.style.borderRadius = largeSize / 2 + 'px';
+                            newI.style.backgroundColor = '#ccc';
+                            
+                        }
+                        
+                        subtract = (a, b) => { return a - b }
+                        
+                        add = (a, b) => { return a + b }
+                        
+                        inputNote = () => {
+                            socket.emit('note input', textArea.value);
+                            textArea.blur();
+                            textAreaOverlay.style.display = 'none';
+                        };
+                        </script>
     </body>
 </html>
