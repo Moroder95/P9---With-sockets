@@ -7,7 +7,7 @@ const io = require('socket.io')(http);
 let phoneId = '';
 
 // Serve the static files from the React app
-app.use(express.static(path.join(__dirname, '.client/build')));
+app.use(express.static(path.join(__dirname, './client/build')));
 
 // Serve the phone UI
 app.get('/phone', (req, res)=>{
