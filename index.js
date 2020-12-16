@@ -7,23 +7,15 @@ const io = require('socket.io')(http);
 let phoneId = '';
 
 // Serve the static files from the React app
-app.use(express.static(path.join(__dirname, 'client/build')));
+app.use(express.static(path.join(__dirname, '.client/build')));
 
 // Serve the phone UI
 app.get('/phone', (req, res)=>{
-    res.sendFile(path.join(__dirname, '/phone/phone.html'));
+    res.sendFile(path.join(__dirname, './phone/phone.html'));
 });
 app.get('/phone.css', (req, res) => {
-    res.sendFile(path.join(__dirname, '/phone/phone.css'))
+    res.sendFile(path.join(__dirname, './phone/phone.css'))
 });
-
-// An api endpoint that returns a short list of items
-app.get('/api/getList', (req,res) => {
-    var list = ["item1", "item2", "item3"];
-    res.json(list);
-    console.log('Sent list of items');
-});
-
 
 // Handles any requests that don't match the ones above
 app.get('*', (req,res) =>{
